@@ -80,7 +80,7 @@ You may need to process Session yourself because `HezeSessionRequestFilter` is p
 
 # Preview
 
-My website [https://yuusann.com](https://yuusann.com) is powered by Heze and SPiCa.
+My website [https://blog.yuusann.com](https://blog.yuusann.com) is powered by Heze and SPiCa.
 
 SPiCa is another framework which is used to create Vue app using Swift. Not opensource yet.
 
