@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title>Heze demo</title>
+</head>
+<body>
+
+<form action="student" method="POST">
+    Name: <input type="text" name="name"><br>
+    Age: <input type="text" name="age">
+    <input type="submit" value="Add">
+</form>
+    
+{{#student_list}}
+    <p>Name: {{NAME}}, Age: {{AGE}}, Adult: {{isAdult}}, Query: {{QUERY_DATE}}</p>
+{{/student_list}}
+
+</body>
+</html>
+

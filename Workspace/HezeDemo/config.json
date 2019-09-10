@@ -1,0 +1,15 @@
+{
+    "port": 8080,
+    "mysql": {
+        "ip": "127.0.0.1",
+        "port": 3306,
+        "username": "",
+        "password": "",
+        "database": "HezeDemo"
+    },
+    "session": {
+        "name": "x-heze-session",
+        "table": "Session",
+        "idle": 31536000
+    }
+}
