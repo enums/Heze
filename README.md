@@ -1,6 +1,6 @@
 # Heze
 
-Hese is a lightly Swift server-side framework powered by Perfect 3.x.
+Heze is a lightly Swift server-side framework powered by Perfect 3.x.
 
 # Get started
 
@@ -42,7 +42,7 @@ Workspace contains:
 
 - `config.json`: Configrations.
 - `Public`: Static resources.
-- `View`: Web templates.
+- `Views`: Web templates.
 
 ## Context
 
@@ -74,7 +74,7 @@ It's powered by [PerfectSMTP](https://github.com/PerfectlySoft/Perfect-SMTP).
 
 ## Need other database?
 
-Look at class `HezeDatabase`. It's a abstract interface of datbase. Feel free to implement `HezeDatabaseImpl` yourself.
+Look at class `HezeDatabase`. It's a abstract interface of database. Feel free to implement `HezeDatabaseImpl` yourself.
 
 You may need to process Session yourself because `HezeSessionRequestFilter` is powered by [PerfectSessionMySQL](https://github.com/PerfectlySoft/Perfect-Session-MySQL).
 
