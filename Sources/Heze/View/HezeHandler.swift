@@ -35,13 +35,34 @@ open class HezeHandler: HezeObject {
         return meta
     }
 
+    public var request: HTTPRequest?
+
+    open func requestVaild() -> Bool {
+        return true
+    }
+
+    open func handleInvaild(_ req: HTTPRequest, _ res: HTTPResponse) {
+        res.setBody(string: "Request Vailed Failed.")
+        res.completed()
+    }
+
     open func handle(_ req: HTTPRequest, _ res: HTTPResponse) -> HezeResponsable? {
         return nil
     }
 
     internal func handleThenComplete(_ req: HTTPRequest, _ res: HTTPResponse) {
-        handle(req, res)?.setBody(for: res)
-        res.completed()
+        request = req
+        defer {
+            request = nil
+        }
+        guard requestVaild() else {
+            handleInvaild(req, res)
+            return
+        }
+        if let response = handle(req, res) {
+            response.setBody(for: res)
+            res.completed()
+        }
     }
 
 }

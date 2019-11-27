@@ -115,6 +115,10 @@ open class HezeModel: HezeObject {
 
 public extension Array where Element: HezeModel {
 
+    func archive() -> [HezeViewParam] {
+        return map { $0.archive() }
+    }
+
     func render() -> JSON? {
         let modelJson = JSON(self.map { $0.render() })
         guard modelJson.type == .array else {

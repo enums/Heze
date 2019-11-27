@@ -23,7 +23,7 @@ open class HezeModelField: HezeObject {
     public enum DataType: String {
         case string = "VARCHAR"
         case int = "INT"
-        case text = "TEXT"
+        case text = "LONGTEXT"
     }
 
     public var name: String

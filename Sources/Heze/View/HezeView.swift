@@ -22,7 +22,7 @@ open class HezeView: HezeHandler {
         return HezeViewParam()
     }
 
-    open override func handle(_ req: HTTPRequest, _ res: HTTPResponse) -> HezeResponsable {
+    open override func handle(_ req: HTTPRequest, _ res: HTTPResponse) -> HezeResponsable? {
         guard let content = self.render() else {
             return "Oops! Something wrong on rendering view."
         }
