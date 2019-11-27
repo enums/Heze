@@ -24,6 +24,13 @@ open class HezeModelField: HezeObject {
         case string = "VARCHAR"
         case int = "INT"
         case text = "LONGTEXT"
+
+        func toSQL(len: Int) -> String {
+            switch self {
+            case .string, .int: return "\(rawValue)(\(len))"
+            case .text: return rawValue
+            }
+        }
     }
 
     public var name: String
@@ -111,7 +118,7 @@ open class HezeModelField: HezeObject {
     }
 
     internal func toSql() -> HezeSQLStatement {
-        let typeStr = "\(type.rawValue)(\(length))"
+        let typeStr = type.toSQL(len: length)
         let nullStr: String
         if !nullable, let value = defaultValue {
             nullStr = "NOT NULL DEFAULT '\(value)'"
