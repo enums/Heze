@@ -14,6 +14,12 @@ public typealias HezeViewParam = Dictionary<String, Any>
 
 open class HezeView: HezeHandler {
 
+    public override class var meta: HezeView {
+        let meta = self.init()
+        meta.bindContext(.meta)
+        return meta
+    }
+
     open var view: String? {
         return nil
     }
