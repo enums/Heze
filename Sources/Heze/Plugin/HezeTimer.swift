@@ -27,15 +27,15 @@ open class HezeTimer: HezePlugin {
             Thread.sleep(forTimeInterval: self.delay)
             if self.repeatTimes <= 0 {
                 while true {
-                    self.task?()
                     HezeLogger.shared.info("Plugin [\(self.className)] triggered.")
+                    self.task?()
                     Thread.sleep(forTimeInterval: self.interval)
                 }
             } else {
                 var time = 0
                 while true {
-                    self.task?()
                     HezeLogger.shared.info("Plugin [\(self.className)] triggered.")
+                    self.task?()
                     time += 1
                     if time >= self.repeatTimes {
                         break

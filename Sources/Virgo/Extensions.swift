@@ -94,8 +94,15 @@ public extension Decodable {
 
     static func read(from path: String) throws -> Self {
         let url = URL(fileURLWithPath: path)
-        let envData = try Data(contentsOf: url)
-        return try JSONDecoder().decode(self, from: envData)
+        let data = try Data(contentsOf: url)
+        return try JSONDecoder().decode(self, from: data)
+    }
+
+    static func fromString(_ str: String) -> Self? {
+        guard let data = str.data(using: .utf8) else {
+            return nil
+        }
+        return try? JSONDecoder().decode(self, from: data)
     }
 
 }
@@ -107,5 +114,11 @@ public extension Encodable {
         try data.write(to: URL(fileURLWithPath: path))
     }
 
+    func toString() -> String? {
+        guard let data = try? JSONEncoder().encode(self) else {
+            return nil
+        }
+        return String(data: data, encoding: .utf8)
+    }
 }
 

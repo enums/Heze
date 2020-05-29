@@ -36,7 +36,10 @@ class AppDelegate: HezeAppDelegate {
     }
 
     func beforeBoot() throws {
-
+        HezeSignalTrap.shared.trap(signal: SIGINT) { _ in
+            HezeLogger.shared.info("interrupted")
+            exit(0)
+        }
     }
 
     func registerViews() -> [HezeHandlerPath: [HTTPMethod: HezeMetaHandler]] {
