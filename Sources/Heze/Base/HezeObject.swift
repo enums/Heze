@@ -26,10 +26,12 @@ open class HezeObject {
     public static var className: String {
         return String(describing: Mirror(reflecting: self).subjectType).components(separatedBy: ".")[0]
     }
-
-    public required init() {
-
+    
+    public class func create() -> Self {
+        return Self.init()
     }
+
+    public required init() { }
 
     open func bindContext(_ context: HezeContext?) {
         _context = context

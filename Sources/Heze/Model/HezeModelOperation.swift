@@ -9,7 +9,7 @@
 import Foundation
 
 public func HezeModelCreate<T>(_ model: T.Type, context: HezeContext = .main) -> T where T: HezeModel {
-    let model = T.init()
+    let model = T.create()
     model.bindContext(context)
     model.bindSelf()
     return model
@@ -44,7 +44,7 @@ public func HezeModelQuery<T>(_ type: T.Type,
         return nil
     }
     let result: [T] = records.compactMap { record in
-        let model = T.init()
+        let model = T.create()
         model.bindContext(context)
         model.bindSelf()
         guard model.bindRecord(record) else {
