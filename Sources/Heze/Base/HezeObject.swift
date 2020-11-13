@@ -27,7 +27,7 @@ open class HezeObject {
         return String(describing: Mirror(reflecting: self).subjectType).components(separatedBy: ".")[0]
     }
     
-    public class func create() -> Self {
+    public class func new() -> Self {
         return Self.init()
     }
 
