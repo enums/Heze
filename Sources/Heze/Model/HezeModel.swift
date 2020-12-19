@@ -82,6 +82,12 @@ open class HezeModel: HezeObject {
         }
     }
 
+    public func bindRecord(_ record: HezeDatabaseRecord, id: HezeModelId) -> Bool {
+        var record = record
+        record.insert("\(id)", at: 0)
+        return bindRecord(record)
+    }
+
     internal func bindRecord(_ record: HezeDatabaseRecord) -> Bool {
         guard record.count == fields.count + 1 else {
             return false
