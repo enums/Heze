@@ -66,7 +66,7 @@ open class HezeModel: HezeObject {
         return content
     }
 
-    open func unarchive(_ data: [HezeModelSimpleField: HezeModelFieldDataProtocol]) -> Bool {
+    open func unarchive(id: HezeModelId?, data: [HezeModelSimpleField: HezeModelFieldDataProtocol]) -> Bool {
         let count = fields.count
 
         if count == 0 {
@@ -80,7 +80,14 @@ open class HezeModel: HezeObject {
             }
         }
 
-        values = data
+        for i in 0..<count {
+            let field = fields[i]
+            guard let value = data[field.name], field.setValue(from: "\(value)") else {
+                return false
+            }
+        }
+
+        self.id = id
 
         return true
     }
