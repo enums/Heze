@@ -66,6 +66,25 @@ open class HezeModel: HezeObject {
         return content
     }
 
+    open func unarchive(_ data: [HezeModelSimpleField: HezeModelFieldDataProtocol]) -> Bool {
+        let count = fields.count
+
+        if count == 0 {
+            return true
+        }
+
+        for i in 0..<count {
+            let field = fields[i]
+            guard let value = data[field.name], field.checkValue(value) else {
+                return false
+            }
+        }
+
+        values = data
+
+        return true
+    }
+
     open func render() -> JSON {
         return JSON(archive())
     }
@@ -80,12 +99,6 @@ open class HezeModel: HezeObject {
             $0.bindModel(self)
             return $0
         }
-    }
-
-    public func bindRecord(_ record: HezeDatabaseRecord, id: HezeModelId) -> Bool {
-        var record = record
-        record.insert("\(id)", at: 0)
-        return bindRecord(record)
     }
 
     internal func bindRecord(_ record: HezeDatabaseRecord) -> Bool {
