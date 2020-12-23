@@ -49,7 +49,7 @@ public class HezeSQL {
                                    _ table: String,
                                    _ fields: [HezeModelSimpleField] = HezeModelSimpleFieldAll,
                                    addition: HezeSQLAddition = HezeSQLAdditionNull) -> HezeSQLStatement {
-        let fieldStr = fields.map { "`\($0)`" }.joined(separator: ",")
+        let fieldStr = fields == HezeModelSimpleFieldAll ? "*" : fields.map { "`\($0)`" }.joined(separator: ",")
         return "SELECT \(fieldStr) FROM \(fullTableName(database, table)) \(addition);"
     }
 
