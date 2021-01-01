@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import PerfectSMTP
 
 public class HezeMailClient: HezeObject {
 
