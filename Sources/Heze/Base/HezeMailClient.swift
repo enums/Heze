@@ -38,7 +38,7 @@ public class HezeMailClient: HezeObject {
 
     private func realSend(title: String, content: String, to: (name: String, addr: String)) {
         let email = EMail.init(client: client)
-        email.subject = title
+        email.subject = base64Encoded(title) ?? title
         email.from = recipient
         email.html = content
         email.to.append(Recipient.init(name: to.name, address: to.addr))
@@ -48,5 +48,12 @@ public class HezeMailClient: HezeObject {
         } catch (let e) {
             HezeLogger.shared.error("Failed send email to \(to.name) at \(to.addr). \(e)")
         }
+    }
+
+    private func base64Encoded(_ str: String) -> String? {
+        if let data = str.data(using: .utf8) {
+            return data.base64EncodedString()
+        }
+        return nil
     }
 }
