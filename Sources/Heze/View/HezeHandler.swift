@@ -6,6 +6,7 @@
 //  Copyright © 2019 Yuu Zheng. All rights reserved.
 //
 
+import Foundation
 import PerfectHTTP
 
 public typealias HezeMetaHandler = HezeHandler
@@ -50,7 +51,7 @@ open class HezeHandler: HezeObject {
         return nil
     }
 
-    internal func handleThenComplete(_ req: HTTPRequest, _ res: HTTPResponse) {
+    open func handleThenComplete(_ req: HTTPRequest, _ res: HTTPResponse) {
         request = req
         defer {
             request = nil
@@ -63,6 +64,16 @@ open class HezeHandler: HezeObject {
             response.setBody(for: res)
             res.completed()
         }
+    }
+
+    open func wrappedhandleThenComplete(_ req: HTTPRequest, _ res: HTTPResponse) {
+        #if os(macOS)
+        autoreleasepool {
+            handleThenComplete(req, res)
+        }
+        #else
+        handleThenComplete(req, res)
+        #endif
     }
 
 }
