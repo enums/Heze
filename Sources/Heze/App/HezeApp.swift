@@ -148,7 +148,7 @@ public class HezeApp: HezeObject {
             routes += pair.compactMap { (arg) in
                 let (method, handler) = arg
                 handler.bindContext(context)
-                return Route(method: method, uri: path, handler: handler.handleThenComplete)
+                return Route(method: method, uri: path, handler: handler.wrappedhandleThenComplete)
             }
         }
         server.addRoutes(Routes(routes))
