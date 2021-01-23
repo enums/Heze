@@ -52,69 +52,69 @@ open class HezeDatabase: HezeObject {
         HezeLogger.shared.abort("Cannot init db without impl")
     }
 
-    private lazy var lock = NSLock()
+    public lazy var lock = NSLock()
     
-    private func lockIfNeed() {
+    public func lockIfNeed() {
         if !impl.threadSafe {
             lock.lock()
         }
     }
     
-    private func unlockIfNeed() {
+    public func unlockIfNeed() {
         if !impl.threadSafe {
             lock.unlock()
         }
     }
     
-    internal func connect() -> Bool {
+    open func connect() -> Bool {
         lockIfNeed()
         defer { unlockIfNeed() }
         return impl.connect()
     }
 
-    internal func query(_ sql: HezeSQLStatement) -> [HezeDatabaseRecord]? {
+    open func query(_ sql: HezeSQLStatement) -> [HezeDatabaseRecord]? {
         lockIfNeed()
         defer { unlockIfNeed() }
         return impl.query(sql)
     }
 
-    internal func isDatabaseExist() -> Bool {
+    open func isDatabaseExist() -> Bool {
         lockIfNeed()
         defer { unlockIfNeed() }
         return impl.isDatabaseExist()
     }
 
-    internal func createDatabase() -> Bool {
+    open func createDatabase() -> Bool {
         lockIfNeed()
         defer { unlockIfNeed() }
         return impl.createDatabase()
     }
 
-    internal func dropDatabse() -> Bool {
+    open func dropDatabse() -> Bool {
         lockIfNeed()
         defer { unlockIfNeed() }
         return impl.dropDatabse()
     }
 
-    internal func isTableExist(for model: HezeModel) -> Bool {
+    open func isTableExist(for model: HezeModel) -> Bool {
         lockIfNeed()
         defer { unlockIfNeed() }
         return impl.isTableExist(model.table)
     }
 
-    internal func createTable(for model: HezeModel) -> Bool {
+    open func createTable(for model: HezeModel) -> Bool {
         lockIfNeed()
         defer { unlockIfNeed() }
         return impl.createTable(model.table, fields: model.fields)
     }
 
-    internal func dropTable(for model: HezeModel) -> Bool {
+    open func dropTable(for model: HezeModel) -> Bool {
         lockIfNeed()
         defer { unlockIfNeed() }
         return impl.dropTable(model.table)
     }
 
-    internal func selectTable(for model: HezeModel,
+    open func selectTable(for model: HezeModel,
                               addition: HezeSQLAddition) -> [HezeDatabaseRecord]? {
         lockIfNeed()
         defer { unlockIfNeed() }
@@ -123,7 +123,7 @@ open class HezeDatabase: HezeObject {
 
 
     @discardableResult
-    internal func insertModel(_ model: HezeModel) -> Bool {
+    open func insertModel(_ model: HezeModel) -> Bool {
         lockIfNeed()
         defer { unlockIfNeed() }
         guard let id = impl.insertRecord(table: model.table, record: model.toRecord()) else {
@@ -134,7 +134,7 @@ open class HezeDatabase: HezeObject {
     }
 
     @discardableResult
-    internal func updateModel(_ model: HezeModel) -> Bool {
+    open func updateModel(_ model: HezeModel) -> Bool {
         guard let id = model.id else {
             HezeLogger.shared.error("Unknow model with id(nil)!")
             return false
@@ -145,7 +145,7 @@ open class HezeDatabase: HezeObject {
     }
 
     @discardableResult
-    internal func updateModelByPlusOne(_ model: HezeModel, _ field: HezeModelField) -> Bool {
+    open func updateModelByPlusOne(_ model: HezeModel, _ field: HezeModelField) -> Bool {
         guard let id = model.id else {
             HezeLogger.shared.error("Unknow model with id(nil)!")
             return false
@@ -160,7 +160,7 @@ open class HezeDatabase: HezeObject {
     }
 
     @discardableResult
-    internal func deleteModel(_ model: HezeModel) -> Bool {
+    open func deleteModel(_ model: HezeModel) -> Bool {
         guard let id = model.id else {
             HezeLogger.shared.error("Unknow model with id(nil)!")
             return false
