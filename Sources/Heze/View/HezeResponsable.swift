@@ -44,6 +44,6 @@ extension Array: HezeResponsable where Element == UInt8 {
 extension JSON: HezeResponsable {
 
     public func setBody(for res: HTTPResponse) {
-        self.rawString()?.setBody(for: res)
+        self.rawString(.utf8, options: .init(rawValue: 0))?.setBody(for: res)
     }
 }
