@@ -62,6 +62,7 @@ open class HezeMySQLDatabase: HezeObject, HezeDatabaseImpl {
     public func query(_ sql: HezeSQLStatement) -> [HezeDatabaseRecord]? {
         guard queryWithRetryIfFailed(sql) else {
             HezeLogger.shared.debug("[SQL][Failed] \(sql)")
+            HezeLogger.shared.debug("[SQL][Message] \(mysql.errorMessage())")
             return nil
         }
         HezeLogger.shared.debug("[SQL][Success] \(sql)")
@@ -79,6 +80,7 @@ open class HezeMySQLDatabase: HezeObject, HezeDatabaseImpl {
         let sql = sqls.joined(separator: " ")
         guard queryWithRetryIfFailed(sql) else {
             HezeLogger.shared.debug("[SQL][Failed] \(sql)")
+            HezeLogger.shared.debug("[SQL][Message] \(mysql.errorMessage())")
             return nil
         }
         HezeLogger.shared.debug("[SQL][Success] \(sql)")
