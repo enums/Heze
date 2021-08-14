@@ -21,6 +21,8 @@ public protocol HezeDatabaseImpl {
     var threadSafe: Bool { get }
 
     func connect() -> Bool
+    func ping() -> Bool
+
     func query(_ sql: HezeSQLStatement) -> [HezeDatabaseRecord]?
     func query(_ sqls: [HezeSQLStatement]) -> [[HezeDatabaseRecord]]?
 
