@@ -59,6 +59,10 @@ open class HezeMySQLDatabase: HezeObject, HezeDatabaseImpl {
         return true
     }
 
+    public func ping() -> Bool {
+        return mysql.ping()
+    }
+
     public func query(_ sql: HezeSQLStatement) -> [HezeDatabaseRecord]? {
         guard queryWithRetryIfFailed(sql) else {
             HezeLogger.shared.debug("[SQL][Failed] \(sql)")
@@ -180,10 +184,6 @@ open class HezeMySQLDatabase: HezeObject, HezeDatabaseImpl {
     private func queryWithRetryIfFailed(_ statement: String) -> Bool {
         if mysql.query(statement: statement) {
             return true
-        }
-
-        guard mysql.ping() else {
-            return false
         }
 
         return mysql.query(statement: statement)
