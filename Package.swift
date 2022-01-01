@@ -16,11 +16,12 @@ let package = Package(
         .package(url: "https://github.com/PerfectlySoft/Perfect-Markdown.git", from: "3.0.0"),
         .package(url: "https://github.com/PerfectlySoft/Perfect-Session.git", from: "3.0.0"),
         .package(url: "https://github.com/PerfectlySoft/Perfect-Session-MySQL.git", from: "3.0.0"),
+        .package(url: "https://github.com/PerfectlySoft/Perfect-WebSockets.git", from: "3.0.0"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "3.0.0"),
     ],
     targets: [
         .target(name: "HezeDemo", dependencies: ["Heze"]),
-        .target(name: "Heze", dependencies: ["PerfectHTTPServer",  "PerfectMustache", "PerfectCrypto", "PerfectMySQL", "PerfectCURL", "PerfectMarkdown", "PerfectSession", "PerfectSessionMySQL", "Rainbow", "Virgo"]),
+        .target(name: "Heze", dependencies: ["PerfectHTTPServer",  "PerfectMustache", "PerfectCrypto", "PerfectMySQL", "PerfectCURL", "PerfectMarkdown", "PerfectSession", "PerfectSessionMySQL", "PerfectWebSockets", "Rainbow", "Virgo"]),
         .target(name: "Virgo", dependencies: ["Rainbow"]),
     ]
 )

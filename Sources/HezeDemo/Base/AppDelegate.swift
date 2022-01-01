@@ -52,6 +52,10 @@ class AppDelegate: HezeAppDelegate {
             "student": [
                 .get: StudentListView.meta,
                 .post: StudentAddApi.meta,
+            ],
+
+            "socket": [
+                .get: HezeSocketClient.meta,
             ]
         ]
     }
