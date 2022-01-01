@@ -18,8 +18,12 @@ open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
         return nil
     }
 
-    open class func makeInstance(context: HezeContext) -> HezeSocketHandler? {
-        let instance = Self.init() as HezeSocketHandler
+    open class func create(context: HezeContext = .main) -> HezeSocketHandler? {
+        #if os(macOS)
+        let instance = Self.init()
+        #else
+        let instance = self.init()
+        #endif
         instance.bindContext(context)
         return instance
     }
@@ -38,9 +42,17 @@ open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
                 guard protocols.contains(socketProtocol) else {
                     return nil
                 }
-                return Self.makeInstance(context: self.context)
+                #if os(macOS)
+                return Self.create(context: self.context)
+                #else
+                return type(of: self).create(context: self.context)
+                #endif
             } else {
-                return Self.makeInstance(context: self.context)
+                #if os(macOS)
+                return Self.create(context: self.context)
+                #else
+                return type(of: self).create(context: self.context)
+                #endif
             }
         }).handleRequest(request: req, response: res)
     }
