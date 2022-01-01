@@ -16,9 +16,9 @@ class RepeatSocketClient: HezeSocketClient {
         return bytes
     }
 
-    override class func makeInstance(context: HezeContext) -> HezeSocketHandler? {
+    override class func create(context: HezeContext) -> HezeSocketHandler? {
         if RepeatSocketClientStorage == nil {
-            RepeatSocketClientStorage = super.makeInstance(context: context)
+            RepeatSocketClientStorage = super.create(context: context)
         }
         return RepeatSocketClientStorage
     }
