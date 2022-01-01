@@ -12,6 +12,7 @@ import PerfectHTTP
 
 public protocol HezeResponsable {
     func setBody(for res: HTTPResponse)
+    func toBytes() -> [UInt8]?
 }
 
 public func HezeResponse(_ success: Bool, _ msg: String? = nil, data: JSON? = nil) -> JSON {
@@ -30,6 +31,13 @@ extension String: HezeResponsable {
         res.setHeader(.contentLength, value: "\(self.lengthOfBytes(using: .utf8))")
     }
 
+    public func toBytes() -> [UInt8]? {
+        guard let data = self.data(using: .utf8) else {
+            return nil
+        }
+        return [UInt8](data)
+    }
+
 }
 
 extension Array: HezeResponsable where Element == UInt8 {
@@ -39,11 +47,22 @@ extension Array: HezeResponsable where Element == UInt8 {
         res.setHeader(.contentLength, value: "\(self.count)")
     }
 
+    public func toBytes() -> [UInt8]? {
+        return self
+    }
+
 }
 
 extension JSON: HezeResponsable {
 
     public func setBody(for res: HTTPResponse) {
         self.rawString(.utf8, options: .init(rawValue: 0))?.setBody(for: res)
+    }
+
+    public func toBytes() -> [UInt8]? {
+        guard let data = try? self.rawData() else {
+            return nil
+        }
+        return [UInt8](data)
     }
 }
