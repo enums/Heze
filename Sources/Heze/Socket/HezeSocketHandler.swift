@@ -18,6 +18,12 @@ open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
         return nil
     }
 
+    open class func makeInstance(context: HezeContext) -> HezeSocketHandler? {
+        let instance = Self.init() as HezeSocketHandler
+        instance.bindContext(context)
+        return instance
+    }
+
     open override func handleThenComplete(_ req: HTTPRequest, _ res: HTTPResponse) {
         request = req
         defer {
@@ -27,14 +33,14 @@ open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
             handleInvaild(req, res)
             return
         }
-        WebSocketHandler(handlerProducer: { (request, protocols) -> WebSocketSessionHandler? in
+        WebSocketHandler(handlerProducer: { (request, protocols) in
             if let socketProtocol = self.socketProtocol {
                 guard protocols.contains(socketProtocol) else {
                     return nil
                 }
-                return self
+                return Self.makeInstance(context: self.context)
             } else {
-                return self
+                return Self.makeInstance(context: self.context)
             }
         }).handleRequest(request: req, response: res)
     }

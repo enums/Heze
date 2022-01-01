@@ -55,7 +55,7 @@ class AppDelegate: HezeAppDelegate {
             ],
 
             "socket": [
-                .get: HezeSocketClient.meta,
+                .get: RepeatSocketClient.meta,
             ]
         ]
     }
