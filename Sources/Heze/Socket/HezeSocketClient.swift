@@ -34,11 +34,11 @@ open class HezeSocketClient: HezeSocketHandler {
         socket?.close()
     }
 
-    public override func connected() {
+    open override func connected() {
 
     }
 
-    public override func closed() {
+    open override func closed() {
 
     }
 }
