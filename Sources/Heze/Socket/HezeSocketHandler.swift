@@ -14,7 +14,7 @@ open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
     public var socket: WebSocket? = nil
     public var remoteHost: String?
     public var remotePort: UInt16?
-    public var queue = DispatchQueue(label: "heze.socket.handler", attributes: .concurrent)
+    public var queue = DispatchQueue(label: "heze.socket.handler")
     public var buffer = [UInt8]()
 
     open var socketProtocol: String? {
@@ -104,10 +104,14 @@ open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
     open func handleBytes(_ bytes: [UInt8], opcodeType: WebSocket.OpcodeType, final: Bool, socket: WebSocket, completion: @escaping (HezeResponsable?) -> Void) {
         buffer.append(contentsOf: bytes)
         if final {
-            defer {
-                buffer.removeAll(keepingCapacity: false)
+            receiveBytes(buffer) { [weak self] in
+                guard let self = self else {
+                    completion($0)
+                    return
+                }
+                self.buffer.removeAll(keepingCapacity: false)
+                completion($0)
             }
-            receiveBytes(buffer, completion: completion)
         } else {
             completion(nil)
         }
