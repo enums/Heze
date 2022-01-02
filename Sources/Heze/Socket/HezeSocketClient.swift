@@ -18,8 +18,8 @@ open class HezeSocketClient: HezeSocketHandler {
         return socket?.isConnected ?? false
     }
 
-    open override func receiveBytes(_ bytes: [UInt8]) -> HezeResponsable? {
-        return nil
+    open override func receiveBytes(_ bytes: [UInt8], completion: @escaping (HezeResponsable?) -> Void) {
+        completion(nil)
     }
 
     open func close() {
