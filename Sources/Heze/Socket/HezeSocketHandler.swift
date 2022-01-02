@@ -12,6 +12,8 @@ import PerfectWebSockets
 open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
 
     public var socket: WebSocket? = nil
+    public var remoteHost: String?
+    public var remotePort: UInt16?
     public var buffer = [UInt8]()
 
     open var socketProtocol: String? {
@@ -38,22 +40,26 @@ open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
             return
         }
         WebSocketHandler(handlerProducer: { (request, protocols) in
+            let handler: HezeSocketHandler?
             if let socketProtocol = self.socketProtocol {
                 guard protocols.contains(socketProtocol) else {
                     return nil
                 }
                 #if os(macOS)
-                return Self.create(context: self.context)
+                handler = Self.create(context: self.context)
                 #else
-                return type(of: self).create(context: self.context)
+                handler = type(of: self).create(context: self.context)
                 #endif
             } else {
                 #if os(macOS)
-                return Self.create(context: self.context)
+                handler = Self.create(context: self.context)
                 #else
-                return type(of: self).create(context: self.context)
+                handler = type(of: self).create(context: self.context)
                 #endif
             }
+            handler?.remoteHost = req.remoteAddress.host
+            handler?.remotePort = req.remoteAddress.port
+            return handler
         }).handleRequest(request: req, response: res)
     }
 
