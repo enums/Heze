@@ -12,8 +12,8 @@ var RepeatSocketClientStorage: HezeSocketHandler?
 
 class RepeatSocketClient: HezeSocketClient {
 
-    override func receiveBytes(_ bytes: [UInt8]) -> HezeResponsable? {
-        return bytes
+    open override func receiveBytes(_ bytes: [UInt8], completion: @escaping (HezeResponsable?) -> Void) {
+        completion(bytes)
     }
 
     override class func create(context: HezeContext) -> HezeSocketHandler? {
