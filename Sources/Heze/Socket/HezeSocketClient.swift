@@ -22,23 +22,8 @@ open class HezeSocketClient: HezeSocketHandler {
         return nil
     }
 
-    public func sendMessage(_ msg: String) {
-        socket?.sendStringMessage(string: msg, final: true) { }
-    }
-
-    public func sendBytes(_ bytes: [UInt8]) {
-        socket?.sendBinaryMessage(bytes: bytes, final: true) { }
-    }
-
-    public func close() {
+    open func close() {
         socket?.close()
     }
 
-    open override func connected() {
-
-    }
-
-    open override func closed() {
-
-    }
 }

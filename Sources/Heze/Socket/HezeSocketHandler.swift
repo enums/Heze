@@ -72,7 +72,7 @@ open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
                 return
             }
             if let bytes = self.handleBytes(bytes, opcodeType: opcodeType, final: final, socket: socket)?.toBytes() {
-                socket.sendBinaryMessage(bytes: bytes, final: final) {
+                self.sendBytes(bytes) {
                     self.handleSession(request: req, socket: socket)
                 }
             } else {
@@ -97,11 +97,19 @@ open class HezeSocketHandler: HezeHandler, WebSocketSessionHandler {
         return nil
     }
 
-    public func connected() {
+    open func sendMessage(_ msg: String, completion: @escaping () -> Void) {
+        sendBytes([UInt8](msg.utf8), completion: completion)
+    }
+
+    open func sendBytes(_ bytes: [UInt8], completion: @escaping () -> Void) {
+        socket?.sendBinaryMessage(bytes: bytes, final: true, completion: completion)
+    }
+
+    open func connected() {
 
     }
 
-    public func closed() {
+    open func closed() {
 
     }
 }
